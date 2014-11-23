@@ -78,6 +78,7 @@ angular.module('mean.users')
       $scope.global.registerForm = true;
       $scope.input = {
         type: 'password',
+        typeConfirm: 'password',
         placeholder: 'Password',
         placeholderConfirmPass: 'Repeat Password',
         iconClassConfirmPass: '',
@@ -92,20 +93,18 @@ angular.module('mean.users')
         $scope.input.tooltipText = $scope.input.tooltipText === 'Show password' ? 'Hide password' : 'Show password';
       };
       $scope.togglePasswordConfirmVisible = function() {
-        $scope.input.type = $scope.input.type === 'text' ? 'password' : 'text';
+        $scope.input.typeConfirm = $scope.input.typeConfirm === 'text' ? 'password' : 'text';
         $scope.input.placeholderConfirmPass = $scope.input.placeholderConfirmPass === 'Repeat Password' ? 'Visible Password' : 'Repeat Password';
         $scope.input.iconClassConfirmPass = $scope.input.iconClassConfirmPass === 'icon_hide_password' ? '' : 'icon_hide_password';
         $scope.input.tooltipTextConfirmPass = $scope.input.tooltipTextConfirmPass === 'Show password' ? 'Hide password' : 'Show password';
       };
 
       $scope.register = function() {
-        $scope.usernameError = null;
         $scope.registerError = null;
         $http.post('/register', {
           email: $scope.user.email,
           password: $scope.user.password,
           confirmPassword: $scope.user.confirmPassword,
-          username: $scope.user.username,
           name: $scope.user.name
         })
           .success(function() {
@@ -117,9 +116,7 @@ angular.module('mean.users')
           })
           .error(function(error) {
             // Error: authentication failed
-            if (error === 'Username already taken') {
-              $scope.usernameError = error;
-            } else if (error === 'Email already taken') {
+            if (error === 'Email already taken') {
               $scope.emailError = error;
             } else $scope.registerError = error;
           });

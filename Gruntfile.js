@@ -74,7 +74,7 @@ module.exports = function(grunt) {
           args: [],
           ignore: ['node_modules/**'],
           ext: 'js,html',
-          nodeArgs: ['--debug'],
+          //nodeArgs: ['--debug'],
           delayTime: 1,
           cwd: __dirname
         }
@@ -117,7 +117,7 @@ module.exports = function(grunt) {
   if (process.env.NODE_ENV === 'production') {
     grunt.registerTask('default', ['clean', 'cssmin', 'uglify', 'concurrent']);
   } else {
-    grunt.registerTask('default', ['clean', 'jshint', 'csslint', 'concurrent']);
+    grunt.registerTask('default', ['clean', 'jshint', /*'csslint',*/ 'concurrent']);
   }
 
   //Test task.

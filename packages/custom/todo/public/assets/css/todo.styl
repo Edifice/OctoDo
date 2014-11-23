@@ -1,0 +1,62 @@
+@import flex
+@import system
+@import variables
+
+.todo-list
+	.todo-add
+		width 100%
+		.todo-add-title
+			spaceOnRight = 20px
+			width "calc(100% - %s)" % (buttonSize + spaceOnRight)
+			height buttonSize
+			line-height buttonSize
+			background backgroundC
+			border borderWidth solid primaryC
+			border-radius (buttonSize / 2)
+			padding 0 14px
+			margin-right spaceOnRight
+			font-size 34px
+		.button
+			padding-right 4px
+			line-height (buttonSize - 6px)
+	ul
+		list-style none
+		padding-left 0
+		margin-top (buttonSize / 2)
+		li
+			numberOfButtonsInTheLine = 2
+			height (buttonSize * 1.5)
+			&.done
+				.todo-title
+					text-decoration line-through
+			input.todo-title
+				font-family 'Just Me Again Down Here', serif
+				font-weight 400
+				font-size (buttonSize / 2)
+				width "calc(100% - %s)" % (numberOfButtonsInTheLine * ((borderWidth * 2) + buttonSize))
+				line-height buttonSize
+				border none
+				background transparent
+			.button.button-float
+				position absolute
+			for i in (1..5)
+				.button.button-float:nth-of-type({i})
+					margin-left (-1 * i * (buttonSize + borderWidth))
+.button
+	display inline-block
+	width buttonSize
+	height buttonSize
+	background backgroundC
+	color primaryC
+	border borderWidth solid primaryC
+	border-radius (buttonSize / 2)
+	text-align center
+	font-size (buttonSize / 3)
+	line-height buttonSize
+	&:hover
+		cursor pointer
+		background secondaryC
+
+*:focus{
+	outline none
+}

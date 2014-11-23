@@ -1,0 +1,31 @@
+<div class="todo-list" ng-controller="TodoController">
+    <div class="todo-add flex-container">
+        <input class="todo-add-title" type="text" ng-model="todo.title"/>
+        <button class="button" ng-click="create()">
+            <i class="glyphicon glyphicon-plus"></i>
+        </button>
+    </div>
+    <ul>
+        <li ng-repeat="ticket in todoList" ng-class="{done: ticket.done}">
+            <button class="button" ng-click="ticket.done = !ticket.done">
+                <i class="glyphicon" ng-class="{'glyphicon-ok': ticket.done}"></i>
+            </button>
+
+            <input type="text" class="todo-title" ng-model="ticket.title" />
+
+            <div class="pull-right">
+                <a class="button button-float" ng-show="showEditFor === ticket._id" ng-click="remove(ticket);">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </a>
+                <a class="button button-float" ng-show="showEditFor === ticket._id" ng-click="remove(ticket);">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </a>
+                <a class="button" ng-click="showEditFor = (showEditFor === ticket._id ? '' : ticket._id)">
+                    <i class="glyphicon glyphicon-cog"></i>
+                </a>
+            </div>
+
+        </li>
+    </ul>
+    <h2 ng-hide="!todoList || todoList.length">Nothing to do :(</h2>
+</div>

@@ -54,9 +54,8 @@ exports.create = function(req, res, next) {
   // because we set our user.provider to local our models/user.js validation will always be true
   req.assert('name', 'You must enter a name').notEmpty();
   req.assert('email', 'You must enter a valid email address').isEmail();
-  req.assert('password', 'Password must be between 8-20 characters long').len(8, 20);
-  req.assert('username', 'Username cannot be more than 20 characters').len(1, 20);
-  req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
+  req.assert('password', 'Passphrase must be minimum characters long').len(8, 150);
+  req.assert('confirmPassword', 'Passphrases do not match').equals(req.body.password);
 
   var errors = req.validationErrors();
   if (errors) {
@@ -71,7 +70,7 @@ exports.create = function(req, res, next) {
         case 11000:
         case 11001:
           res.status(400).send([{
-            msg: 'Username already taken',
+            msg: 'Username already taken ' + JSON.stringify(err),
             param: 'username'
           }]);
           break;
@@ -158,7 +157,7 @@ exports.resetpassword = function(req, res, next) {
       req.logIn(user, function(err) {
         if (err) return next(err);
         return res.send({
-          user: user,
+          user: user
         });
       });
     });
@@ -190,11 +189,7 @@ exports.forgotpassword = function(req, res, next) {
       },
       function(token, done) {
         User.findOne({
-          $or: [{
             email: req.body.text
-          }, {
-            username: req.body.text
-          }]
         }, function(err, user) {
           if (err || !user) return done(true);
           done(err, user, token);
