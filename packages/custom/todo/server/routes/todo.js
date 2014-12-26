@@ -13,10 +13,10 @@ var hasAuthorization = function(req, res, next) {
 
 module.exports = function(Todo, app, auth) {
     app.route('/todo')
-        .get(todoCtrl.all)
-        .post(auth.requiresLogin, todoCtrl.create);
+        .get(auth.requiresLogin, hasAuthorization, todoCtrl.all)
+        .post(auth.requiresLogin, hasAuthorization, todoCtrl.create);
     app.route('/todo/:todoId')
-        .get(todoCtrl.show)
+        .get(auth.requiresLogin, hasAuthorization, todoCtrl.show)
         .put(auth.requiresLogin, hasAuthorization, todoCtrl.update)
         .delete(auth.requiresLogin, hasAuthorization, todoCtrl.destroy);
 

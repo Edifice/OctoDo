@@ -5,27 +5,45 @@
             <i class="glyphicon glyphicon-plus"></i>
         </button>
     </div>
+    <div class="todo-add extra-buttons flex-container">
+        <span class="button button-due-date" ng-class="{active: visibleExtra === 'due-date'}">
+            <i class="glyphicon glyphicon-calendar" ng-click="setDueDate()"></i>
+            <input type="text" pick-a-date="date" pick-a-date-options="datePickerOptions" placeholder="Due Date" ng-model="todo.dueDate"/>
+        </span>
+        <span class="button button-priority"  ng-class="{active: visibleExtra === 'priority'}">
+            <i class="glyphicon glyphicon-warning-sign" ng-click="setPriority()"></i>
+            <select name="newPriority" ng-options="item.id as item.label for item in priorities" ng-model="todo.priority"></select>
+        </span>
+        <!--span class="button" ng-click="createNotification()" ng-click="visibleExtra = 'notification'" ng-class="{active: visibleExtra === 'notification'}">
+            <i class="glyphicon glyphicon-volume-up"></i>
+            <input type="datetime" ng-show="visibleExtra === 'notification'"/>
+        </span-->
+    </div>
     <ul>
-        <li ng-repeat="ticket in todoList" ng-class="{done: ticket.done}">
-            <button class="button" ng-click="ticket.done = !ticket.done">
-                <i class="glyphicon" ng-class="{'glyphicon-ok': ticket.done}"></i>
+        <li ng-repeat="ticket in todoList | orderBy:'dueDate'" ng-class="{done: ticket.done, 'priority-1': ticket.priority === 1, 'priority-2': ticket.priority === 2, 'priority-3': ticket.priority === 3, 'priority-4': ticket.priority === 4, 'priority-5': ticket.priority === 5}">
+            <h2 class="group-header" ng-show="showTicketSeparator(ticket)">{{getTicketGroup(ticket)}}</h2>
+            <button class="button button-checker" ng-click="ticket.done = !ticket.done">
+                <i class="glyphicon" ng-class="{'glyphicon-ok': ticket.done, 'glyphicon-warning-sign': !ticket.done && ticket.priority >= 4}"></i>
             </button>
 
-            <input type="text" class="todo-title" ng-model="ticket.title" />
+            <input type="text" class="todo-title" ng-model="ticket.title" ng-blur="save(ticket)"/>
 
             <div class="pull-right">
                 <a class="button button-float" ng-show="showEditFor === ticket._id" ng-click="remove(ticket);">
                     <i class="glyphicon glyphicon-trash"></i>
                 </a>
-                <a class="button button-float" ng-show="showEditFor === ticket._id" ng-click="remove(ticket);">
-                    <i class="glyphicon glyphicon-trash"></i>
+                <a class="button button-float" ng-show="showEditFor === ticket._id" ng-click="changePriority(ticket);">
+                    <i class="glyphicon glyphicon-warning-sign"></i>
                 </a>
-                <a class="button" ng-click="showEditFor = (showEditFor === ticket._id ? '' : ticket._id)">
+                <a class="button button-float" ng-show="showEditFor === ticket._id" pick-a-date="date" pick-a-date-options="{onSet: inlinePickADateOnSet}" ng-click="inlinePickADateOnOpen(ticket)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </a>
+                <a class="button" ng-click="showEdit(ticket)">
                     <i class="glyphicon glyphicon-cog"></i>
                 </a>
             </div>
 
         </li>
     </ul>
-    <h2 ng-hide="!todoList || todoList.length">Nothing to do :(</h2>
+    <h2 class="no-more-task" ng-hide="!todoList || todoList.length">You finished with all your tasks.<br>You deserve a beer now! :)</h2>
 </div>

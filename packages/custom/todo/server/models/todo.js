@@ -24,6 +24,14 @@ var TodoSchema = new Schema({
         type: String,
         trim: true
     },
+    dueDate:{
+        type: Date
+    },
+    priority: {
+        type: Number,
+        default: 3,
+        enum: [1, 2, 3, 4, 5]
+    },
     user: {
         type: Schema.ObjectId,
         ref: 'User'
@@ -37,17 +45,26 @@ var TodoSchema = new Schema({
 /**
  * Validations
  */
-TodoSchema.path('title').validate(function(title) {
+TodoSchema.path('title').validate(function (title) {
     return !!title;
 }, 'Title cannot be blank');
 
 /**
  * Statics
  */
-TodoSchema.statics.load = function(id, cb) {
+TodoSchema.statics.load = function (id, cb) {
     this.findOne({
         _id: id
     }).populate('user', 'name username').exec(cb);
 };
+/*TodoSchema.statics.getPriorities = function(){
+    return [
+        {id: 1, label: 'trivial'},
+        {id: 2, label: 'minor'},
+        {id: 3, label: 'major'},
+        {id: 4, label: 'urgent'},
+        {id: 5, label: 'critical'}
+    ];
+};*/
 
 mongoose.model('Todo', TodoSchema);

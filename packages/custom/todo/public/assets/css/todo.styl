@@ -2,33 +2,74 @@
 @import system
 @import variables
 
+*
+	font-family 'Just Me Again Down Here', serif
+
 .todo-list
 	.todo-add
 		width 100%
 		.todo-add-title
 			spaceOnRight = 20px
-			width "calc(100% - %s)" % (buttonSize + spaceOnRight)
+			width "calc(100% - %s)" % (buttonSize + borderWidth)
 			height buttonSize
 			line-height buttonSize
 			background backgroundC
 			border borderWidth solid primaryC
 			border-radius (buttonSize / 2)
 			padding 0 14px
-			margin-right spaceOnRight
+			margin-right borderWidth
 			font-size 34px
+		&.extra-buttons
+			justify-content flex-end
+			.button
+				margin-top borderWidth
+				margin-left borderWidth
+			.button-due-date,
+			.button-priority
+				&.active
+					width 180px
+					input,
+					select
+						display inline-block
+				input,
+				select
+					display none
+					//font-family 'Just Me Again Down Here', serif
+					font-weight 400
+					font-size (buttonSize / 3)
+					width 100px
+					line-height 44px
+					border none
+					background transparent
 		.button
 			padding-right 4px
 			line-height (buttonSize - 6px)
 	ul
 		list-style none
 		padding-left 0
-		margin-top (buttonSize / 2)
+		margin-top borderWidth
 		li
 			numberOfButtonsInTheLine = 2
-			height (buttonSize * 1.5)
+			min-height (buttonSize + borderWidth)
 			&.done
+				color taskDoneC
+				.button-checker
+					color taskDoneC
+					border-color transparent
+					&:hover
+						background transparent
 				.todo-title
 					text-decoration line-through
+			&.priority-1
+				color taskPriority1C
+			&.priority-2
+				color taskPriority2C
+			&.priority-3
+				color taskPriority3C
+			&.priority-4
+				color taskPriority4C
+			&.priority-5
+				color taskPriority5C
 			input.todo-title
 				font-family 'Just Me Again Down Here', serif
 				font-weight 400
@@ -39,16 +80,24 @@
 				background transparent
 			.button.button-float
 				position absolute
-			for i in (1..5)
+			for i in (1..10)
 				.button.button-float:nth-of-type({i})
 					margin-left (-1 * i * (buttonSize + borderWidth))
+			h2
+				text-transform capitalize
+				color taskPriority1C
+
+.no-more-task
+	text-align center
 .button
 	display inline-block
 	width buttonSize
 	height buttonSize
 	background backgroundC
 	color primaryC
-	border borderWidth solid primaryC
+	border-width borderWidth
+	border-style solid
+	border-color primaryC
 	border-radius (buttonSize / 2)
 	text-align center
 	font-size (buttonSize / 3)
@@ -57,6 +106,15 @@
 		cursor pointer
 		background secondaryC
 
-*:focus{
+*:focus
 	outline none
-}
+
+.container
+	max-width 600px
+	&.top-menu
+		margin-top 10px
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator
+	display none
+	-webkit-appearance none

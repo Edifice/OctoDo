@@ -112,7 +112,7 @@ body {
   margin-left: 0;
 }
 .content {
-  margin-top: 70px;
+/*margin-top: 70px;*/
   width: 100%;
 }
 footer {
@@ -129,19 +129,55 @@ footer {
 footer p {
   padding: 5px 0 12px 10px;
 }
+* {
+  font-family: 'Just Me Again Down Here', serif;
+}
 .todo-list .todo-add {
   width: 100%;
 }
 .todo-list .todo-add .todo-add-title {
-  width: calc(100% - 80px);
+  width: calc(100% - 64px);
   height: 60px;
   line-height: 60px;
   background: #04aef4;
   border: 4px solid #222;
   border-radius: 30px;
   padding: 0 14px;
-  margin-right: 20px;
+  margin-right: 4px;
   font-size: 34px;
+}
+.todo-list .todo-add.extra-buttons {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  -webkit-justify-content: flex-end;
+  -moz-justify-content: flex-end;
+  justify-content: flex-end;
+}
+.todo-list .todo-add.extra-buttons .button {
+  margin-top: 4px;
+  margin-left: 4px;
+}
+.todo-list .todo-add.extra-buttons .button-due-date.active,
+.todo-list .todo-add.extra-buttons .button-priority.active {
+  width: 180px;
+}
+.todo-list .todo-add.extra-buttons .button-due-date.active input,
+.todo-list .todo-add.extra-buttons .button-priority.active input,
+.todo-list .todo-add.extra-buttons .button-due-date.active select,
+.todo-list .todo-add.extra-buttons .button-priority.active select {
+  display: inline-block;
+}
+.todo-list .todo-add.extra-buttons .button-due-date input,
+.todo-list .todo-add.extra-buttons .button-priority input,
+.todo-list .todo-add.extra-buttons .button-due-date select,
+.todo-list .todo-add.extra-buttons .button-priority select {
+  display: none;
+  font-weight: 400;
+  font-size: 20px;
+  width: 100px;
+  line-height: 44px;
+  border: none;
+  background: transparent;
 }
 .todo-list .todo-add .button {
   padding-right: 4px;
@@ -150,13 +186,38 @@ footer p {
 .todo-list ul {
   list-style: none;
   padding-left: 0;
-  margin-top: 30px;
+  margin-top: 4px;
 }
 .todo-list ul li {
-  height: 90px;
+  min-height: 64px;
+}
+.todo-list ul li.done {
+  color: #4bc8fc;
+}
+.todo-list ul li.done .button-checker {
+  color: #4bc8fc;
+  border-color: transparent;
+}
+.todo-list ul li.done .button-checker:hover {
+  background: transparent;
 }
 .todo-list ul li.done .todo-title {
   text-decoration: line-through;
+}
+.todo-list ul li.priority-1 {
+  color: #7ed8fd;
+}
+.todo-list ul li.priority-2 {
+  color: #4e4e4e;
+}
+.todo-list ul li.priority-3 {
+  color: #222;
+}
+.todo-list ul li.priority-4 {
+  color: #a14a00;
+}
+.todo-list ul li.priority-5 {
+  color: #ff6308;
 }
 .todo-list ul li input.todo-title {
   font-family: 'Just Me Again Down Here', serif;
@@ -185,13 +246,37 @@ footer p {
 .todo-list ul li .button.button-float:nth-of-type(5) {
   margin-left: -320px;
 }
+.todo-list ul li .button.button-float:nth-of-type(6) {
+  margin-left: -384px;
+}
+.todo-list ul li .button.button-float:nth-of-type(7) {
+  margin-left: -448px;
+}
+.todo-list ul li .button.button-float:nth-of-type(8) {
+  margin-left: -512px;
+}
+.todo-list ul li .button.button-float:nth-of-type(9) {
+  margin-left: -576px;
+}
+.todo-list ul li .button.button-float:nth-of-type(10) {
+  margin-left: -640px;
+}
+.todo-list ul li h2 {
+  text-transform: capitalize;
+  color: #7ed8fd;
+}
+.no-more-task {
+  text-align: center;
+}
 .button {
   display: inline-block;
   width: 60px;
   height: 60px;
   background: #04aef4;
   color: #222;
-  border: 4px solid #222;
+  border-width: 4px;
+  border-style: solid;
+  border-color: #222;
   border-radius: 30px;
   text-align: center;
   font-size: 20px;
@@ -203,4 +288,15 @@ footer p {
 }
 *:focus {
   outline: none;
+}
+.container {
+  max-width: 600px;
+}
+.container.top-menu {
+  margin-top: 10px;
+}
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }
