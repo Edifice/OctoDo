@@ -123,21 +123,42 @@ angular.module('mean.todo').controller('TodoController',
 
         $scope.inlinePickADateOnSet = function (resp) {
             if (!moment) {
-                throw 'Moment is not defined!';
+                return 0;
             }
             if ($scope.ticketOnDueDateEdit) {
                 $scope.ticketOnDueDateEdit.dueDate = moment(resp.select).format('YYYY-MM-DD');
-                $scope.ticketOnDueDateEdit = null;
+                $scope.save($scope.ticketOnDueDateEdit);
+                delete $scope.ticketOnDueDateEdit;
             }
+            return 1;
         };
 
-        $scope.priviousTicketGroup = null;
         $scope.showTicketSeparator = function (todo) {
-            var ticketGroup = $scope.getTicketGroup(todo);
-            var ret = ticketGroup != $scope.priviousTicketGroup;
+            var todoList = $scope.todoList.sort(function (a, b) {
+                var _a = moment(a.dueDate).hour(0).minute(0).second(0).millisecond(0);
+                var _b = moment(b.dueDate).hour(0).minute(0).second(0).millisecond(0);
+                if (_a.isBefore(_b)) {
+                    return -1;
+                }
+                if (_a.isAfter(_b)) {
+                    return 1;
+                }
+                return 0;
+            });
 
-            $scope.priviousTicketGroup = ticketGroup;
-            return ret;
+            for (var i = 0; i < todoList.length; i++) {
+                if (todoList[i]._id === todo._id) {
+                    if (typeof todoList[i - 1] !== 'undefined') {
+                        var thisGroup = $scope.getTicketGroup(todoList[i]);
+                        var previousGroup = $scope.getTicketGroup(todoList[i - 1]);
+
+                        return thisGroup !== previousGroup;
+                    }
+
+                    return true;
+                }
+            }
+            return true;
         };
 
         $scope.getTicketGroup = function (todo) {
