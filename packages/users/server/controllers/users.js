@@ -57,10 +57,10 @@ exports.create = function(req, res, next) {
   req.assert('password', 'Passphrase must be minimum characters long').len(8, 150);
   req.assert('confirmPassword', 'Passphrases do not match').equals(req.body.password);
 
-  var errors = req.validationErrors();
+  /*var errors = req.validationErrors();
   if (errors) {
     return res.status(400).send(errors);
-  }
+  }*/
 
   // Hard coded for now. Will address this with the user permissions system in v0.3.5
   user.roles = ['authenticated'];
@@ -70,8 +70,8 @@ exports.create = function(req, res, next) {
         case 11000:
         case 11001:
           res.status(400).send([{
-            msg: 'Username already taken ' + JSON.stringify(err),
-            param: 'username'
+            msg: 'Name already taken ' + JSON.stringify(err),
+            param: 'name'
           }]);
           break;
         default:

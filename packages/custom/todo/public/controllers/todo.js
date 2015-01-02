@@ -86,8 +86,26 @@ angular.module('mean.todo').controller('TodoController',
                 $scope.todoList = todoList;
             });
         };
-
         $scope.find();
+
+        // periodic refresh to get updates on all devices
+        var interval = true;
+        var intervalRefresh = function () {
+            var intervalRefresh2 = setInterval(function () {
+                if (interval) {
+                    $scope.find();
+                }
+                clearInterval(intervalRefresh2);
+                intervalRefresh();
+            }, 3000);
+        };
+        intervalRefresh();
+        var startRefresh = function () {
+            interval = true;
+        };
+        var stopRefresh = function () {
+            interval = false;
+        };
 
         $scope.openAddingModal = function () {
             var modalInstance = $modal.open({
@@ -118,6 +136,7 @@ angular.module('mean.todo').controller('TodoController',
 
         $scope.ticketOnDueDateEdit = null;
         $scope.inlinePickADateOnOpen = function (ticket) {
+            stopRefresh();
             $scope.ticketOnDueDateEdit = ticket;
         };
 
@@ -130,6 +149,7 @@ angular.module('mean.todo').controller('TodoController',
                 $scope.save($scope.ticketOnDueDateEdit);
                 delete $scope.ticketOnDueDateEdit;
             }
+            startRefresh();
             return 1;
         };
 

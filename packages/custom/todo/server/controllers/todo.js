@@ -87,7 +87,7 @@ exports.show = function(req, res) {
  * List of Articles
  */
 exports.all = function(req, res) {
-    Todo.find().sort('-created').populate('user', 'name').exec(function(err, todo) {
+    Todo.find({user: req.user}).sort('-created').populate('user', 'name').exec(function(err, todo) {
         if (err) {
             return res.json(500, {
                 error: 'Cannot list the todos'

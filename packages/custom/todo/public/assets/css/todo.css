@@ -129,6 +129,10 @@ footer {
 footer p {
   padding: 5px 0 12px 10px;
 }
+.top-menu img {
+  width: 180px;
+  margin-bottom: 10px;
+}
 * {
   font-family: 'Just Me Again Down Here', serif;
 }
