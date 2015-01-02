@@ -57,14 +57,5 @@ TodoSchema.statics.load = function (id, cb) {
         _id: id
     }).populate('user', 'name username').exec(cb);
 };
-/*TodoSchema.statics.getPriorities = function(){
-    return [
-        {id: 1, label: 'trivial'},
-        {id: 2, label: 'minor'},
-        {id: 3, label: 'major'},
-        {id: 4, label: 'urgent'},
-        {id: 5, label: 'critical'}
-    ];
-};*/
 
 mongoose.model('Todo', TodoSchema);

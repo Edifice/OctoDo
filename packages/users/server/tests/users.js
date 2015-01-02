@@ -157,21 +157,10 @@ describe('<Unit Test>', function() {
         });
       });
 
-      it('should show an error when try to save without name', function(done) {
-
-        var _user = new User(user1);
-        _user.name = '';
-
-        return _user.save(function(err) {
-          should.exist(err);
-          done();
-        });
-      });
-
       it('should show an error when try to save without username', function(done) {
 
         var _user = new User(user1);
-        _user.username = '';
+        _user.name = '';
 
         return _user.save(function(err) {
           should.exist(err);
@@ -188,23 +177,6 @@ describe('<Unit Test>', function() {
         return _user.save(function(err) {
           should.exist(err);
           done();
-        });
-      });
-
-      it('should be able to to save without password and provider set to twitter', function(done) {
-
-        var _user = new User(user1);
-
-        _user.password = '';
-        _user.provider = 'twitter';
-
-        return _user.save(function(err) {
-          _user.remove(function() {
-            should.not.exist(err);
-            _user.provider.should.equal('twitter');
-            _user.hashed_password.should.have.length(0);
-            done();
-          });
         });
       });
 

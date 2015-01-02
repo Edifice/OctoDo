@@ -136,8 +136,7 @@
         scope.register();
         $httpBackend.flush();
         // test scope value
-        expect(scope.usernameError).toBe('Username already taken');
-        expect(scope.registerError).toBe(null);
+        expect(scope.registerError).toBe('Username already taken');
       });
 
       it('should fail to register with non-matching passwords', function() {
@@ -145,7 +144,6 @@
         scope.register();
         $httpBackend.flush();
         // test scope value
-        expect(scope.usernameError).toBe(null);
         expect(scope.registerError).toBe('Password mismatch');
       });
     });
