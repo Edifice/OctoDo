@@ -98,23 +98,21 @@ describe('<Unit Test>', function () {
 
             });
 
-            it('should check that roles are assigned and created properly', function (done) {
+it('should check that default values are assigned and todo is created properly', function (done) {
+    var _todo = new Todo(todo1);
+    _todo.save(function (err) {
+        should.not.exist(err);
 
-                var _todo = new Todo(todo1);
-                _todo.save(function (err) {
-                    should.not.exist(err);
-
-                    _todo.title.should.have.length(30);
-                    _todo.content.should.have.length(100);
-                    _todo.priority.should.equal(3);
-                    _todo.done.should.equal(false);
-                    _todo.remove(function (err) {
-                        should.not.exist(err);
-                        done();
-                    });
-                });
-
-            });
+        _todo.title.should.have.length(30);
+        _todo.content.should.have.length(100);
+        _todo.priority.should.equal(3);
+        _todo.done.should.equal(false);
+        _todo.remove(function (err) {
+            should.not.exist(err);
+            done();
+        });
+    });
+});
 
             it('should be able to change property', function (done) {
 
